@@ -1,25 +1,16 @@
-import logo from './logo.svg';
-import './App.css';
+import Jogo from "./components/Jogo"
+import Letras from "./components/Letras"
 
-function App() {
+export default function App() {
+
+  const letters = ["A", "B", "C", "D", "E", "F", "J", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <>
+      <Jogo />
+      <div className="container-letters">
+        {letters.map(letter => <Letras letter={letter}/>)}
+      </div>
+    </>
+  )
 }
-
-export default App;
