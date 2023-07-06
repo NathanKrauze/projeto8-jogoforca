@@ -6,6 +6,10 @@
     width: 100vw;
 }
 
+button:hover{
+    cursor: pointer;
+}
+
 .container-game {
     width: 100vw;
     display: flex;

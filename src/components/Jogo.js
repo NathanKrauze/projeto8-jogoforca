@@ -1,6 +1,8 @@
+import { useState } from "react"
 
-
-export default function Jogo() {
+export default function Jogo({word}) {
+    const printWord = word.map(letter => letter)
+    
     return (
         <>
             <div className="container-game">
@@ -11,7 +13,7 @@ export default function Jogo() {
                 </div>
                 <div className="right">
                     <button>Escolher Palavra</button>
-                    <span>___ren_ena</span>
+                    <span>{printWord}</span>
                 </div>
             </div>
         </>
