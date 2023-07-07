@@ -1,12 +1,8 @@
-export default function Letras ({letter, isDisabled, classDisabled}) {
-
-    function oi (){
-        alert('oi')
-    }
+export default function Letras ({letter, isDisabled, classDisabled, clickLetter}) {
 
     return( 
         <>
-            <button className={`letter ${classDisabled}`} disabled={isDisabled} onClick={oi}>{letter}</button>
+            <button className={`letter ${classDisabled}`} disabled={isDisabled} onClick={() => clickLetter(letter)}>{letter}</button>
         </>
     )
 }

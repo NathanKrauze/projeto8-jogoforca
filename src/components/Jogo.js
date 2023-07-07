@@ -1,4 +1,3 @@
-import { useState } from "react"
 
 export default function Jogo({word, chooseWord, forcaIndex}) {
     const printWord = word.map(letter => letter)
@@ -8,7 +7,7 @@ export default function Jogo({word, chooseWord, forcaIndex}) {
             <div className="container-game">
                 <div className="left">
                     <div className="forca">
-                        <img src={`/assets/forca${forcaIndex}.png`} alt="forca0" />
+                        <img src={`/assets/forca${forcaIndex}.png`} alt="forca" />
                     </div>
                 </div>
                 <div className="right">
