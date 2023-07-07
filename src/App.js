@@ -11,10 +11,14 @@ export default function App() {
   const [ word, setWord] = useState([])
   const [ printWord, setPrintWord] = useState([])
   const [ wrongGuesses, setWrongGuesses] = useState(0)
+  const [ loose, setLoose] = useState(undefined)
+  const [ win, setWin ] = useState(undefined)
 
   function chooseWord () {
     setLetterClicked([])
     setWrongGuesses(0)
+    setLoose(undefined)
+    setWin(undefined)
     const number = Math.floor(Math.random()*palavras.length)
     const newWord = palavras[number]
     const arrayNewWord = newWord.split('')
@@ -24,6 +28,17 @@ export default function App() {
   }
 
   function clickLetter(letter) {
+
+    function checkArrays(prntWord, word) {
+      const newPrntWord = prntWord.toString()
+      const newWord = word.toString()
+      if (newPrntWord === newWord){
+        return true
+      }else {
+        return false
+      }
+    }
+
     const newArrayClicked = [...letterClicked]
     newArrayClicked.push(letter)
     setLetterClicked(newArrayClicked)
@@ -32,8 +47,17 @@ export default function App() {
       let copyPrintWord = [...printWord]
       copyPrintWord = copyWord.map((chr, index) => chr===letter ? letter : copyPrintWord[index]!=='_' ? copyPrintWord[index] : '_')
       setPrintWord(copyPrintWord)
+      if (checkArrays(copyPrintWord, word)){
+        setWin('ganhou')
+      }
     }else{
-      setWrongGuesses(wrongGuesses + 1)
+      const newWrongGuess = wrongGuesses + 1
+      setWrongGuesses(newWrongGuess)
+      if( newWrongGuess === 6){
+        setLoose('perdeu')
+        const looseWord = [...word]
+        setPrintWord(looseWord)
+      }
     }
   }
 
@@ -42,15 +66,16 @@ export default function App() {
       <Jogo 
         word={printWord} 
         chooseWord={chooseWord} 
-        forcaIndex={wrongGuesses} 
+        forcaIndex={wrongGuesses}
+        WinOrLoose={loose === 'perdeu' ? 'perdeu' : win === 'ganhou'? 'ganhou' : ''} 
       />
       <div className="container-letters">
         {alfabeto.map((letter, indice) => 
           <Letras 
             letter={letter} 
             key={indice} 
-            isDisabled={letterClicked.includes(letter)? true : false} 
-            classDisabled={letterClicked.includes(letter)? 'disabled' : ''}
+            isDisabled={letterClicked.includes(letter) || loose === 'perdeu' || win === 'ganhou'? true : false} 
+            classDisabled={letterClicked.includes(letter) || loose === 'perdeu' || win === 'ganhou'? 'disabled' : ''}
             clickLetter={clickLetter} 
           />
         )}

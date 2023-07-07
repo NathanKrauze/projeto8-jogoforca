@@ -40,16 +40,23 @@ button:hover{
     border-radius: 12px;
     border: none;
     margin-top: 60px;
+    
+}
 
+.container-game .perdeu{
+    color: red;
+}
+
+.container-game .ganhou{
+    color: #27AE60;
 }
 
 .container-game .right span {
-    color: black;
     font-size: 48px;
     font-weight: bold;
     letter-spacing: 7px;
     margin-right: 90px;
-}
+}    
 
 .container-letters {
     display: flex;

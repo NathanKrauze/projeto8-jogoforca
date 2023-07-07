@@ -1,6 +1,7 @@
 
-export default function Jogo({word, chooseWord, forcaIndex}) {
-    const printWord = word.map(letter => letter)
+export default function Jogo({word, chooseWord, forcaIndex, WinOrLoose}) {
+    let printWord = word.map(letter => letter)
+    //printWord = printWord.toString()
 
     return (
         <>
@@ -12,7 +13,7 @@ export default function Jogo({word, chooseWord, forcaIndex}) {
                 </div>
                 <div className="right">
                     <button onClick={chooseWord}>Escolher Palavra</button>
-                    <span>{printWord}</span>
+                    <span className={WinOrLoose}>{printWord}</span>
                 </div>
             </div>
         </>
