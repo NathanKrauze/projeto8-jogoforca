@@ -1,3 +1,4 @@
+import Chute from "./components/Chute"
 import Jogo from "./components/Jogo"
 import Letras from "./components/Letras"
 import palavras from "./palavras"
@@ -13,12 +14,15 @@ export default function App() {
   const [ wrongGuesses, setWrongGuesses] = useState(0)
   const [ loose, setLoose] = useState(undefined)
   const [ win, setWin ] = useState(undefined)
+  const [ inputDisabled, setInputDisabled] = useState(true)
+  const [ wordGuessed, setWordGuessed] = useState('')
 
   function chooseWord () {
     setLetterClicked([])
     setWrongGuesses(0)
     setLoose(undefined)
     setWin(undefined)
+    setInputDisabled(false)
     const number = Math.floor(Math.random()*palavras.length)
     const newWord = palavras[number]
     const arrayNewWord = newWord.split('')
@@ -34,8 +38,6 @@ export default function App() {
       const newWord = word.toString()
       if (newPrntWord === newWord){
         return true
-      }else {
-        return false
       }
     }
 
@@ -43,20 +45,24 @@ export default function App() {
     newArrayClicked.push(letter)
     setLetterClicked(newArrayClicked)
     if (word.includes(letter)) {
-      let copyWord = [...word]
+      const copyWord = [...word]
       let copyPrintWord = [...printWord]
       copyPrintWord = copyWord.map((chr, index) => chr===letter ? letter : copyPrintWord[index]!=='_' ? copyPrintWord[index] : '_')
       setPrintWord(copyPrintWord)
       if (checkArrays(copyPrintWord, word)){
-        setWin('ganhou')
+        setWin('win')
+        setInputDisabled(true)
+        setWordGuessed('')
       }
     }else{
       const newWrongGuess = wrongGuesses + 1
       setWrongGuesses(newWrongGuess)
       if( newWrongGuess === 6){
-        setLoose('perdeu')
+        setLoose('loose')
         const looseWord = [...word]
         setPrintWord(looseWord)
+        setInputDisabled(true)
+        setWordGuessed('')
       }
     }
   }
@@ -67,19 +73,31 @@ export default function App() {
         word={printWord} 
         chooseWord={chooseWord} 
         forcaIndex={wrongGuesses}
-        WinOrLoose={loose === 'perdeu' ? 'perdeu' : win === 'ganhou'? 'ganhou' : ''} 
+        WinOrLoose={loose === 'loose' ? 'loose' : win === 'win'? 'win' : ''} 
       />
       <div className="container-letters">
         {alfabeto.map((letter, indice) => 
           <Letras 
             letter={letter} 
             key={indice} 
-            isDisabled={letterClicked.includes(letter) || loose === 'perdeu' || win === 'ganhou'? true : false} 
-            classDisabled={letterClicked.includes(letter) || loose === 'perdeu' || win === 'ganhou'? 'disabled' : ''}
+            isDisabled={letterClicked.includes(letter) || loose === 'loose' || win === 'win'? true : false} 
+            classDisabled={letterClicked.includes(letter) || loose === 'loose' || win === 'win'? 'disabled' : ''}
             clickLetter={clickLetter} 
           />
         )}
       </div>
+      <Chute 
+        isDisabled={inputDisabled}
+        classDisabled={inputDisabled? 'disabled' : ''}
+        wordGuessed={wordGuessed}
+        setWordGuessed={setWordGuessed}
+        word={word}
+        setPrintWord={setPrintWord}
+        setWin={setWin}
+        setLoose={setLoose}
+        setWrongGuesses={setWrongGuesses}
+        setInputDisabled={setInputDisabled}
+        />
     </>
   )
 }
